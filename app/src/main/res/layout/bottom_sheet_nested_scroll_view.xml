@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/bottom_sheet"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/bottom_sheet_height"
+    android:outlineProvider="bounds"
+    android:clipToPadding="true"
+    android:background="@color/darkPrimaryColor"
+    app:layout_behavior="android.support.design.widget.BottomSheetBehavior"
+    tools:targetApi="lollipop">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/bottom_sheet_padding"
+        android:paddingRight="@dimen/bottom_sheet_padding"
+        android:paddingBottom="@dimen/bottom_sheet_padding">
+
+        <LinearLayout
+            android:id="@+id/ll_peek"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/peek_view_vertical_padding"
+            android:paddingBottom="@dimen/peek_view_vertical_padding">
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+                android:textColor="?attr/colorAccent"
+                tools:text="Blade Runner 2049" />
+
+            <TextView
+                android:id="@+id/tv_first_billed_cast"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="?attr/textColorContent"
+                tools:text="Harrison Ford, Ryan Gosling" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:baselineAligned="false">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="3">
+
+                <TextView
+                    android:id="@+id/tv_general_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    android:textColor="?attr/textColorHeadline"
+                    tools:text="R  2h47m  Drama, Mystery, Scifi" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="?attr/textColorHeadline"
+                    android:text="@string/release_date"
+                    android:layout_marginTop="@dimen/row_in_group_margin" />
+
+                <TextView
+                    android:id="@+id/tv_release_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    android:textColor="?attr/textColorContent"
+                    tools:text="October 4, 2017"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <tcd.android.com.movietracker.StarRating.CircularRatingsBar
+                    android:id="@+id/crb_average_vote"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp" />
+
+                <TextView
+                    android:id="@+id/tv_vote_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:alpha="0"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                    android:layout_marginTop="@dimen/row_in_group_margin"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="?attr/textColorHeadline"
+            android:text="@string/overview"
+            android:layout_marginTop="@dimen/group_margin"/>
+
+        <TextView
+            android:id="@+id/tv_overview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="?attr/textColorContent"
+            tools:text="Thirty years after the events of the first film, a new blade runner, LAPD Officer K, unearths a long-buried secret that has the potential to plunge what's left of society into chaos. K's discovery leads him on a quest to find Rick Deckard, a former LAPD blade runner who has been missing for 30 years."/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="?attr/textColorHeadline"
+            android:text="@string/tagline"
+            android:layout_marginTop="@dimen/row_in_group_margin" />
+
+        <TextView
+            android:id="@+id/tv_tagline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="?attr/textColorContent"
+            tools:text="There's still a page left."/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_cast_crew"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/group_margin"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="?attr/textColorHeadline"
+            android:text="@string/director"
+            android:layout_marginTop="@dimen/row_in_group_margin" />
+
+        <TextView
+            android:id="@+id/tv_director"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="?attr/textColorContent"
+            tools:text="Denis Villeneuve"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="?attr/textColorHeadline"
+            android:text="@string/writer"
+            android:layout_marginTop="@dimen/row_in_group_margin" />
+
+        <TextView
+            android:id="@+id/tv_writer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="?attr/textColorContent"
+            tools:text="Philip K. Dick"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="?attr/textColorHeadline"
+            android:text="@string/production_country"
+            android:layout_marginTop="@dimen/group_margin" />
+
+        <TextView
+            android:id="@+id/tv_production_country"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="?attr/textColorContent"
+            tools:text="United States of America"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="?attr/textColorHeadline"
+            android:text="@string/spoken_language"
+            android:layout_marginTop="@dimen/row_in_group_margin" />
+
+        <TextView
+            android:id="@+id/tv_spoken_languages"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="?attr/textColorContent"
+            tools:text="English"/>
+
+        <tcd.android.com.movietracker.StarRating.StarRatingsBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+</android.support.v4.widget.NestedScrollView>

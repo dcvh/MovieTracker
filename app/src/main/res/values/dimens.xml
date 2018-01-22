@@ -5,4 +5,21 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="appbar_padding_top">8dp</dimen>
     <dimen name="row_spacing">16dp</dimen>
+    <dimen name="nav_header_vertical_spacing">16dp</dimen>
+    <dimen name="nav_header_height">160dp</dimen>
+
+    <dimen name="description_margin">16dp</dimen>
+    <dimen name="movie_card_view_radius">4dp</dimen>
+    <!--movie details-->
+    <!--bottom sheet-->
+    <dimen name="bottom_sheet_height">500dp</dimen>
+    <dimen name="bottom_sheet_padding">16dp</dimen>
+    <dimen name="peek_view_vertical_padding">16dp</dimen>
+    <dimen name="row_in_group_margin">8dp</dimen>
+    <dimen name="group_margin">32dp</dimen>
+    <!--cast info-->
+    <dimen name="cast_poster_width">96dp</dimen>
+    <dimen name="cast_card_view_radius">4dp</dimen>
+    <dimen name="cast_card_view_margin">8dp</dimen>
+    <dimen name="cast_text_info_margin">4dp</dimen>
 </resources>

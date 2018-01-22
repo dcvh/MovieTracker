@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="AppTheme">
+        <attr name="textColorHeadline" format="color"/>
+        <attr name="textColorContent" format="color"/>
+        <attr name="dividerColor" format="color"/>
+        <attr name="backgroundCardColor" format="color"/>
+        <attr name="iconPlaceHolder" format="integer"/>
+    </declare-styleable>
+
+    <declare-styleable name="CircularRatingsBar">
+        <attr name="progressColor" format="color"/>
+        <attr name="ratings" format="integer"/>
+        <!--<attr name="textColor" format="string"/>-->
+        <attr name="strokeWidth" format="integer"/>
+    </declare-styleable>
+</resources>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="@dimen/cast_poster_width"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="?attr/backgroundCardColor"
+    app:cardCornerRadius="@dimen/movie_card_view_radius"
+    android:layout_marginRight="@dimen/cast_card_view_margin"
+    android:layout_marginEnd="@dimen/cast_card_view_margin">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/iv_profile_picture"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/profile_picture" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="@dimen/cast_text_info_margin">
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:lines="1"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="?attr/textColorHeadline"
+            android:ellipsize="end"/>
+
+        <TextView
+            android:id="@+id/tv_character"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="?attr/textColorContent"
+            android:lines="1"
+            android:ellipsize="end"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

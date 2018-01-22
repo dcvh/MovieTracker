@@ -17,4 +17,38 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <!--custom themes-->
+    <style name="AppTheme.Primary.Base.Light" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="textColorHeadline">#F4F4F6</item>
+        <item name="textColorContent">#96F4F4F6</item>
+        <item name="backgroundCardColor">#FFFF</item>
+        <item name="dividerColor">#F2F2F3</item>
+    </style>
+
+    <style name="AppTheme.Primary.Base.Dark" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorPrimary">@color/darkPrimaryColor</item>
+        <item name="colorPrimaryDark">@color/darkPrimaryColorDark</item>
+        <item name="colorAccent">@color/darkPrimaryColorAccent</item>
+
+        <item name="android:textColor">@android:color/white</item>
+        <item name="textColorHeadline">@android:color/white</item>
+        <item name="textColorContent">@android:color/darker_gray</item>
+
+        <item name="backgroundCardColor">@color/darkBackgroundCardColor</item>
+        <item name="dividerColor">#F2F2F3</item>
+    </style>
+
+    <style name="AppThemeLight" parent="AppTheme.Primary.Base.Light">
+        <item name="android:windowBackground">@color/lightPrimaryColor</item>
+    </style>
+
+    <style name="AppThemeDark" parent="AppTheme.Primary.Base.Dark">
+        <item name="android:windowBackground">@color/darkPrimaryColor</item>
+    </style>
+
+    <style name="WhiteIconToolbar" parent="@style/ThemeOverlay.AppCompat.ActionBar">
+        <!-- Customize color of navigation drawer icon and back arrow -->
+        <item name="colorControlNormal">@android:color/white</item>
+    </style>
+
 </resources>
