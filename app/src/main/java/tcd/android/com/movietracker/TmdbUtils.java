@@ -19,10 +19,9 @@ import okhttp3.OkHttpClient;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 import tcd.android.com.movietracker.Entities.Credit.Actor;
-import tcd.android.com.movietracker.Entities.Credit.Credits;
-import tcd.android.com.movietracker.Entities.Credit.Crew;
-import tcd.android.com.movietracker.Entities.MovieExtraInfo;
-import tcd.android.com.movietracker.Entities.MovieDetails;
+import tcd.android.com.movietracker.Entities.Credit.CrewMember;
+import tcd.android.com.movietracker.Entities.FullMovie;
+import tcd.android.com.movietracker.Entities.MovieExtra;
 import tcd.android.com.movietracker.Entities.Movie;
 
 /**
@@ -160,7 +159,7 @@ public class TmdbUtils {
     }
 
     @NonNull
-    private static ArrayList<Actor> findCastById(int movieId) {
+    static ArrayList<Actor> findCastById(int movieId) {
         String queryUrl = getCreditQueryUrl(movieId);
         String json = getJsonResponse(queryUrl);
 
@@ -175,26 +174,6 @@ public class TmdbUtils {
         }
 
         return cast;
-    }
-
-    @Nullable
-    public static Credits findCreditsById(int movieId) {
-        String queryUrl = getCreditQueryUrl(movieId);
-        String json = getJsonResponse(queryUrl);
-
-        Credits credits = null;
-        if (json != null) {
-            try {
-                JSONObject root = new JSONObject(json);
-                ArrayList<Actor> cast = extractCastFromJson(root);
-                ArrayList<Crew> crew = extractCrewFromJson(root);
-                credits = new Credits(cast, crew);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-
-        return credits;
     }
 
     @NonNull
@@ -216,11 +195,29 @@ public class TmdbUtils {
     }
 
     @NonNull
-    private static ArrayList<Crew> extractCrewFromJson(@NonNull JSONObject root)
+    static ArrayList<CrewMember> findCrewById(int movieId) {
+        String queryUrl = getCreditQueryUrl(movieId);
+        String json = getJsonResponse(queryUrl);
+
+        ArrayList<CrewMember> crew = new ArrayList<>();
+        if (json != null) {
+            try {
+                JSONObject root = new JSONObject(json);
+                crew = extractCrewFromJson(root);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return crew;
+    }
+
+    @NonNull
+    private static ArrayList<CrewMember> extractCrewFromJson(@NonNull JSONObject root)
             throws JSONException {
 
         JSONArray castArray = root.getJSONArray("crew");
-        Crew[] crew = new Crew[castArray.length()];
+        CrewMember[] crew = new CrewMember[castArray.length()];
         for (int i = 0; i < castArray.length(); i++) {
             JSONObject actor = castArray.getJSONObject(i);
             int id = actor.getInt("id");
@@ -229,32 +226,32 @@ public class TmdbUtils {
             String department = actor.getString("department");
             String job = actor.getString("job");
 
-            crew[i] = new Crew(id, name, profilePath, department, job);
+            crew[i] = new CrewMember(id, name, profilePath, department, job);
         }
 
         return new ArrayList<>(Arrays.asList(crew));
     }
 
     @Nullable
-    public static MovieDetails findDetailsById(int movieId) {
+    static MovieExtra findExtraById(int movieId) {
         String queryUrl = getMovieDetailsQueryUrl(movieId);
         String json = getJsonResponse(queryUrl);
 
-        MovieDetails movieDetails = null;
+        MovieExtra movieExtra = null;
         if (json != null) {
             try {
                 JSONObject root = new JSONObject(json);
-                movieDetails = extractDetailsFromJson(root);
+                movieExtra = extractExtraFromJson(root);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
 
-        return movieDetails;
+        return movieExtra;
     }
 
     @NonNull
-    private static MovieDetails extractDetailsFromJson(@NonNull JSONObject root)
+    private static MovieExtra extractExtraFromJson(@NonNull JSONObject root)
             throws JSONException {
         String tagline = root.getString("tagline");
         int runtime = root.getInt("runtime");
@@ -286,31 +283,31 @@ public class TmdbUtils {
             languages[i] = genre.getString("name");
         }
 
-        return  new MovieDetails(runtime, tagline, genres, countries, languages);
+        return  new MovieExtra(runtime, tagline, genres, countries, languages);
     }
 
     @Nullable
-    public static MovieExtraInfo findMovieExtraInfoById(int movieId) {
+    static FullMovie findFullMovieById(int movieId) {
         String queryUrl = getFullInfoQueryUrl(movieId);
         String json = getJsonResponse(queryUrl);
 
-        MovieExtraInfo extraInfo = null;
+        FullMovie fullMovie = null;
         if (json != null) {
             try {
                 JSONObject root = new JSONObject(json);
                 JSONObject creditsRoot = root.getJSONObject("credits");
 
                 ArrayList<Actor> cast = extractCastFromJson(creditsRoot);
-                ArrayList<Crew> crew = extractCrewFromJson(creditsRoot);
-                MovieDetails movieDetails = extractDetailsFromJson(root);
+                ArrayList<CrewMember> crew = extractCrewFromJson(creditsRoot);
+                MovieExtra movieExtra = extractExtraFromJson(root);
 
-                extraInfo = new MovieExtraInfo(new Credits(cast, crew), movieDetails);
+                fullMovie = new FullMovie().addCast(cast).addCrew(crew).addExtra(movieExtra);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
 
-        return extraInfo;
+        return fullMovie;
     }
 
     @NonNull

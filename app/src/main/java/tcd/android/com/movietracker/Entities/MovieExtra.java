@@ -9,7 +9,7 @@ import java.util.Locale;
  * Created by cpu10661 on 1/19/18.
  */
 
-public class MovieDetails {
+public class MovieExtra {
 
     private int mRuntime;
     private String mTagline;
@@ -17,8 +17,8 @@ public class MovieDetails {
     private String[] mCountries;
     private String[] mSpokeLanguages;
 
-    public MovieDetails(int runtime, String tagline,
-                        String[] genres, String[] countries, String[] spokeLanguages) {
+    public MovieExtra(int runtime, String tagline,
+                      String[] genres, String[] countries, String[] spokeLanguages) {
         mRuntime = runtime;
         mTagline = tagline;
         mGenres = genres;

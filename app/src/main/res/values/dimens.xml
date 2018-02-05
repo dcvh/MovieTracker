@@ -14,7 +14,8 @@
     <!--bottom sheet-->
     <dimen name="bottom_sheet_height">500dp</dimen>
     <dimen name="bottom_sheet_padding">16dp</dimen>
-    <dimen name="peek_view_vertical_padding">16dp</dimen>
+    <dimen name="peek_view_horizontal_padding">32dp</dimen>
+    <dimen name="peek_view_vertical_margin">32dp</dimen>
     <dimen name="row_in_group_margin">8dp</dimen>
     <dimen name="group_margin">32dp</dimen>
     <!--cast info-->

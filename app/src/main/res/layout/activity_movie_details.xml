@@ -12,8 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/iv_poster"
+        <tcd.android.com.movietracker.GradientImageView
+            android:id="@+id/giv_poster"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
@@ -38,26 +38,8 @@
 
     </android.support.constraint.ConstraintLayout>
 
-    <View
-        android:id="@+id/shadow"
-        android:layout_width="match_parent"
-        android:layout_height="16dp"
-        android:background="@drawable/shape_gradient_top_shadow"
-        app:layout_anchor="@+id/bottom_sheet" />
-
     <include
         android:id="@+id/bottom_sheet"
-        layout="@layout/bottom_sheet_nested_scroll_view" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab_watch_later"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_anchor="@id/bottom_sheet"
-        android:src="@drawable/ic_watch_later_black_24dp"
-        android:tint="@android:color/white"
-        android:layout_margin="@dimen/fab_margin"
-        app:layout_anchorGravity="top|end"
-        app:fabSize="normal"/>
+        layout="@layout/bottom_sheet" />
 
 </android.support.design.widget.CoordinatorLayout>

@@ -28,4 +28,5 @@
     <string name="writer">Writer</string>
     <string name="carousel">Carousel</string>
     <string name="profile_picture">Profile picture</string>
+    <string name="swipe_up_indicator">swipe up indicator</string>
 </resources>

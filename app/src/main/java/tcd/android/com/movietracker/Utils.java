@@ -1,6 +1,13 @@
 package tcd.android.com.movietracker;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.LightingColorFilter;
+import android.graphics.Matrix;
+import android.graphics.Paint;
 import android.support.annotation.NonNull;
 import android.text.format.DateUtils;
 
@@ -15,6 +22,7 @@ import java.util.Locale;
  * Created by cpu10661 on 1/19/18.
  */
 
+@SuppressWarnings("WeakerAccess")
 public class Utils {
     @NonNull
     public static String join(@NonNull CharSequence delimiter,
@@ -55,5 +63,18 @@ public class Utils {
             return String.format(Locale.getDefault(),
                     "%dh%dm", runtime / 60, runtime % 60);
         }
+    }
+
+
+    static Bitmap darkenBitmap(@NonNull Bitmap src) {
+        Bitmap result = src.copy(src.getConfig(), true);
+        Canvas canvas = new Canvas(result);
+        Paint p = new Paint(Color.RED);
+
+        ColorFilter filter = new LightingColorFilter(0xFF666666, 0x00000000);    // darken
+        p.setColorFilter(filter);
+        canvas.drawBitmap(result, new Matrix(), p);
+
+        return result;
     }
 }

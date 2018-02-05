@@ -14,4 +14,9 @@
         <!--<attr name="textColor" format="string"/>-->
         <attr name="strokeWidth" format="integer"/>
     </declare-styleable>
+
+    <declare-styleable name="GradientImageView">
+        <attr name="colorStart" format="integer"/>
+        <attr name="colorEnd" format="integer"/>
+    </declare-styleable>
 </resources>

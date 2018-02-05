@@ -8,10 +8,10 @@
     <color name="lightPrimaryColorDark">#F4F4F6</color>
     <color name="lightPrimaryColorAccent">#F4F4F6</color>
 
-    <color name="darkPrimaryColor">#303030</color>
-    <color name="darkPrimaryColorDark">#212121</color>
+    <color name="darkPrimaryColor">#3C414A</color>
+    <color name="darkPrimaryColorDark">#363A42</color>
     <!--<color name="darkPrimaryColorAccent">#EAAF3B</color>-->
-    <color name="darkPrimaryColorAccent">#F5A623</color>
-    <!--<color name="darkPrimaryColorAccent">#E91E63</color>-->
+    <!--<color name="darkPrimaryColorAccent">#F5A623</color>-->
+    <color name="darkPrimaryColorAccent">#5CE2ED</color>
     <color name="darkBackgroundCardColor">#424242</color>
 </resources>
