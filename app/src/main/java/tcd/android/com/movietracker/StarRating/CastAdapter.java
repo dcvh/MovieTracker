@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 import tcd.android.com.movietracker.Entities.Credit.Actor;
 import tcd.android.com.movietracker.R;
-import tcd.android.com.movietracker.TmdbUtils;
+import tcd.android.com.movietracker.Utils.TmdbUtils;
 
 /**
  * Created by cpu10661 on 1/18/18.

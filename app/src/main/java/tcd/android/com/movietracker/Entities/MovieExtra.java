@@ -16,6 +16,7 @@ public class MovieExtra {
     private String[] mGenres;
     private String[] mCountries;
     private String[] mSpokeLanguages;
+    private String mClassification;
 
     public MovieExtra(int runtime, String tagline,
                       String[] genres, String[] countries, String[] spokeLanguages) {
@@ -44,5 +45,11 @@ public class MovieExtra {
 
     public String[] getSpokeLanguages() {
         return mSpokeLanguages;
+    }
+
+    public String getClassification() { return mClassification; }
+
+    public void setClassification(String classification) {
+        mClassification = classification;
     }
 }

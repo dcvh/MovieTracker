@@ -38,6 +38,11 @@ import tcd.android.com.movietracker.Entities.MovieExtra;
 import tcd.android.com.movietracker.StarRating.CastAdapter;
 import tcd.android.com.movietracker.StarRating.CircularRatingsBar;
 import tcd.android.com.movietracker.Entities.Movie;
+import tcd.android.com.movietracker.Utils.MovieUtils;
+import tcd.android.com.movietracker.Utils.TmdbUtils;
+import tcd.android.com.movietracker.Utils.Utils;
+import tcd.android.com.movietracker.Utils.Utils.TimeUtils;
+import tcd.android.com.movietracker.Utils.Utils.FormatUtils;
 
 public class MovieDetailsActivity extends AppCompatActivity {
 
@@ -97,8 +102,6 @@ public class MovieDetailsActivity extends AppCompatActivity {
         setUpToolbar();
         setUpBottomSheet();
         setUpUpIndicator();
-
-        // TODO: 1/19/18 implement real carousel or insert a trailer
 
         populateMovieInfo();
     }
@@ -184,10 +187,10 @@ public class MovieDetailsActivity extends AppCompatActivity {
         titleTextView.setText(movie.getTitle());
 
         TextView generalInfoTextView = findViewById(R.id.tv_general_info);
-        generalInfoTextView.setText(Utils.getFirstBilledCast(movie.getCast(), 2));
+        generalInfoTextView.setText(MovieUtils.getFirstBilledCast(movie.getCast(), 2));
 
         TextView releaseDateTextView = findViewById(R.id.tv_release_date);
-        releaseDateTextView.setText(Utils.getDate(this, movie.getReleaseDate()));
+        releaseDateTextView.setText(TimeUtils.getDate(this, movie.getReleaseDate()));
 
         TextView overviewTextView = findViewById(R.id.tv_overview);
         overviewTextView.setText(movie.getOverview());
@@ -198,7 +201,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
         CircularRatingsBar averageVoteCRB = findViewById(R.id.crb_average_vote);
 
         final TextView voteCountTextView = findViewById(R.id.tv_vote_count);
-        voteCountTextView.setText(String.valueOf(Utils.formatNumber(voteCount, "###,###,###")));
+        voteCountTextView.setText(String.valueOf(FormatUtils.formatNumber(voteCount, "###,###,###")));
         voteCountTextView.setTextColor(averageVoteCRB.getColor());
 
         averageVoteCRB.setRatings(averageVote);
@@ -295,11 +298,13 @@ public class MovieDetailsActivity extends AppCompatActivity {
                 }
             });
 
-            // TODO: 05/02/2018 do something with movie classification
             // general info
             TextView generalInfoTextView = activity.findViewById(R.id.tv_general_info);
-            String info = "R  " + Utils.getDuration(extra.getRuntime()) + "  "
-                    + TextUtils.join(", ", extra.getGenres());
+            String info = String.format("%s  %s  %s",
+                    extra.getClassification(),
+                    TimeUtils.getDuration(extra.getRuntime()),
+                    TextUtils.join(", ", extra.getGenres())
+            );
             generalInfoTextView.setText(info);
 
             // tagline

@@ -1,9 +1,10 @@
-package tcd.android.com.movietracker;
+package tcd.android.com.movietracker.Utils;
 
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,11 +26,14 @@ import tcd.android.com.movietracker.Entities.FullMovie;
 import tcd.android.com.movietracker.Entities.MovieExtra;
 import tcd.android.com.movietracker.Entities.Movie;
 
+import tcd.android.com.movietracker.Utils.Utils.TimeUtils;
+
 /**
  * Created by cpu10661 on 1/18/18.
  */
 
 public class TmdbUtils {
+
     // TODO: 1/19/18 secure this key before production 
     private static final String TMDB_API_KEY = "0d951f4ca93b21c3c15c14da2763be8e";
     private static final String IMAGE_URL = "https://image.tmdb.org/t/p/";
@@ -67,7 +71,7 @@ public class TmdbUtils {
     private static String getFullInfoQueryUrl(int movieId) {
         String baseUrl = String.format(Locale.getDefault(),
                 "http://api.themoviedb.org/3/movie/%d?", movieId);
-        String[] fields = new String[] {"credits", "images", "videos", "similar_movies"};
+        String[] fields = new String[] {"credits", "images", "videos", "similar_movies", "release_dates"};
 
         return Uri.parse(baseUrl).buildUpon()
                 .appendQueryParameter("api_key", TMDB_API_KEY)
@@ -99,7 +103,7 @@ public class TmdbUtils {
         return json;
     }
 
-    static ArrayList<Movie> findMoviesByTitle(@NonNull String title) {
+    public static ArrayList<Movie> findMoviesByTitle(@NonNull String title) {
         // get json response
         String queryUrl = getMovieQueryUrl(title);
         String json = getJsonResponse(queryUrl);
@@ -131,7 +135,7 @@ public class TmdbUtils {
 
                 // release date
                 String releaseDate = result.getString("release_date");
-                long releaseDateMillis = Utils.getMillis(releaseDate, "YYYY-MM-dd");
+                long releaseDateMillis = TimeUtils.getMillis(releaseDate, "YYYY-MM-dd");
 
                 // genre IDs
                 JSONArray genreIdsArray = result.getJSONArray("genre_ids");
@@ -160,7 +164,7 @@ public class TmdbUtils {
     }
 
     @NonNull
-    static ArrayList<Actor> findCastById(int movieId) {
+    public static ArrayList<Actor> findCastById(int movieId) {
         String queryUrl = getCreditQueryUrl(movieId);
         String json = getJsonResponse(queryUrl);
 
@@ -196,7 +200,7 @@ public class TmdbUtils {
     }
 
     @NonNull
-    static ArrayList<CrewMember> findCrewById(int movieId) {
+    public static ArrayList<CrewMember> findCrewById(int movieId) {
         String queryUrl = getCreditQueryUrl(movieId);
         String json = getJsonResponse(queryUrl);
 
@@ -234,7 +238,7 @@ public class TmdbUtils {
     }
 
     @Nullable
-    static MovieExtra findExtraById(int movieId) {
+    public static MovieExtra findExtraById(int movieId) {
         String queryUrl = getMovieDetailsQueryUrl(movieId);
         String json = getJsonResponse(queryUrl);
 
@@ -288,7 +292,7 @@ public class TmdbUtils {
     }
 
     @Nullable
-    static FullMovie findFullMovieById(int movieId) {
+    public static FullMovie findFullMovieById(int movieId) {
         String queryUrl = getFullInfoQueryUrl(movieId);
         String json = getJsonResponse(queryUrl);
 
@@ -302,6 +306,9 @@ public class TmdbUtils {
                 ArrayList<CrewMember> crew = extractCrewFromJson(creditsRoot);
                 MovieExtra movieExtra = extractExtraFromJson(root);
 
+                String classification = extractClassificationFromJson(root);
+                movieExtra.setClassification(classification);
+
                 fullMovie = new FullMovie().addCast(cast).addCrew(crew).addExtra(movieExtra);
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -309,6 +316,27 @@ public class TmdbUtils {
         }
 
         return fullMovie;
+    }
+
+    @NonNull
+    private static String extractClassificationFromJson(@NonNull JSONObject root)
+            throws JSONException {
+        JSONObject releaseDates = root.getJSONObject("release_dates");
+        JSONArray results = releaseDates.getJSONArray("results");
+        String nationCode = Locale.getDefault().getCountry().toUpperCase();
+
+        String certification = "";
+        for (int i = 0; i < results.length(); i++) {
+            JSONObject result = results.getJSONObject(i);
+            String iso_3166_1 = result.getString("iso_3166_1");
+            if (iso_3166_1.equals(nationCode) ||
+                    (iso_3166_1.equals("US") && certification == null)) {
+               certification = result.getJSONArray("release_dates")
+                       .getJSONObject(0).getString("certification");
+            }
+        }
+
+        return certification;
     }
 
     @NonNull

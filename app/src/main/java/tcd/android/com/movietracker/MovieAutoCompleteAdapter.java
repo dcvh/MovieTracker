@@ -18,6 +18,9 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 
 import tcd.android.com.movietracker.Entities.Movie;
+import tcd.android.com.movietracker.Utils.MovieUtils;
+import tcd.android.com.movietracker.Utils.TmdbUtils;
+import tcd.android.com.movietracker.Utils.Utils;
 
 /**
  * Created by ADMIN on 30/10/2017.
@@ -68,7 +71,7 @@ public class MovieAutoCompleteAdapter extends BaseAdapter implements Filterable 
 
             ((TextView) convertView.findViewById(R.id.tv_title)).setText(movie.getTitle());
             ((TextView) convertView.findViewById(R.id.tv_cast))
-                    .setText(Utils.getFirstBilledCast(movie.getCast(), 2));
+                    .setText(MovieUtils.getFirstBilledCast(movie.getCast(), 2));
         }
 
         return convertView;

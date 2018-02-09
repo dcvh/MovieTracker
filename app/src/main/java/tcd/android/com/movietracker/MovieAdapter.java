@@ -15,6 +15,9 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 
 import tcd.android.com.movietracker.Entities.Movie;
+import tcd.android.com.movietracker.Utils.MovieUtils;
+import tcd.android.com.movietracker.Utils.TmdbUtils;
+import tcd.android.com.movietracker.Utils.Utils;
 
 import static tcd.android.com.movietracker.MovieDetailsActivity.ARGS_MOVIE_DETAILS;
 
@@ -50,7 +53,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         Glide.with(mContext).load(posterUrl).into(holder.mPosterImageView);
 
         holder.mTitleTextView.setText(movie.getTitle());
-        holder.mCastTextView.setText(Utils.getFirstBilledCast(movie.getCast(), TOTAL_FIRST_BILLED_ACTORS));
+        holder.mCastTextView.setText(MovieUtils.getFirstBilledCast(movie.getCast(), TOTAL_FIRST_BILLED_ACTORS));
 
         holder.mItemCardView.setOnClickListener(new View.OnClickListener() {
             @Override
