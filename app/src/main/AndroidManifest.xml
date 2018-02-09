@@ -21,9 +21,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".MovieDetailsActivity"
-            android:theme="@style/AppThemeDark" />
+        <activity android:name=".TrendingActivity"
+            android:theme="@style/AppThemeDark"/>
     </application>
 
 </manifest>

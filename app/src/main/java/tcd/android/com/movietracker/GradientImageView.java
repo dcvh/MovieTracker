@@ -64,4 +64,8 @@ public class GradientImageView extends FrameLayout {
     public void setImageBitmap(final Bitmap bitmap) {
         mImageView.setImageBitmap(bitmap);
     }
+
+    public void setImageResource(@DrawableRes int resId) {
+        mImageView.setImageResource(resId);
+    }
 }

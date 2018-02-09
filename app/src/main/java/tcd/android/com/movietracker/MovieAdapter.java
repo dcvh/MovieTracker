@@ -18,7 +18,7 @@ import tcd.android.com.movietracker.Entities.Movie;
 import tcd.android.com.movietracker.Utils.MovieUtils;
 import tcd.android.com.movietracker.Utils.TmdbUtils;
 
-import static tcd.android.com.movietracker.MovieDetailsActivity.ARGS_MOVIE_DETAILS;
+import static tcd.android.com.movietracker.MovieDetailsFragment.ARGS_MOVIE_DETAILS;
 
 /**
  * Created by ADMIN on 27/10/2017.
@@ -57,7 +57,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         holder.mItemCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent detailsIntent = new Intent(mContext, MovieDetailsActivity.class);
+                Intent detailsIntent = new Intent(mContext, MovieDetailsFragment.class);
                 detailsIntent.putExtra(ARGS_MOVIE_DETAILS, movie);
                 mContext.startActivity(detailsIntent);
             }

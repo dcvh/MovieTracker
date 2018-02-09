@@ -1,5 +1,6 @@
 package tcd.android.com.movietracker;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -49,6 +50,8 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
         switch (id) {
             case R.id.nav_trending:
+                Intent intent = new Intent(this, TrendingActivity.class);
+                startActivity(intent);
                 break;
             case R.id.nav_collections:
                 break;

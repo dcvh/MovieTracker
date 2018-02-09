@@ -5,8 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context="tcd.android.com.movietracker.MovieDetailsActivity">
+    tools:context="tcd.android.com.movietracker.MovieDetailsFragment">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
@@ -35,13 +34,13 @@
             app:strokeColor="#FF777777"
             app:strokeWidth="1dp"/>
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:theme="@style/WhiteIconToolbar"
-            android:elevation="2dp"
-            tools:targetApi="lollipop" />
+        <!--<android.support.v7.widget.Toolbar-->
+            <!--android:id="@+id/toolbar"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="?attr/actionBarSize"-->
+            <!--android:theme="@style/WhiteIconToolbar"-->
+            <!--android:elevation="2dp"-->
+            <!--tools:targetApi="lollipop" />-->
 
     </android.support.constraint.ConstraintLayout>
 

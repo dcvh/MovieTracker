@@ -79,6 +79,14 @@ public class TmdbUtils {
                 .toString();
     }
 
+    private static String getNowShowingQueryUrl() {
+        return Uri.parse("https://api.themoviedb.org/3/movie/now_playing?").buildUpon()
+                .appendQueryParameter("api_key", TMDB_API_KEY)
+                .appendQueryParameter("language", "en-US")
+                .appendQueryParameter("page", "1")
+                .toString();
+    }
+
     @Nullable
     private static String getJsonResponse(@NonNull String url) {
         OkHttpClient client = new OkHttpClient.Builder()
@@ -136,7 +144,7 @@ public class TmdbUtils {
 
                 // release date
                 String releaseDate = result.getString("release_date");
-                long releaseDateMillis = TimeUtils.getMillis(releaseDate, "YYYY-MM-dd");
+                long releaseDateMillis = TimeUtils.getMillis(releaseDate, "yyyy-MM-dd");
 
                 // genre IDs
                 JSONArray genreIdsArray = result.getJSONArray("genre_ids");
@@ -146,10 +154,10 @@ public class TmdbUtils {
                 }
 
                 // casts
-                Actor[] casts = null;
+                Actor[] cast = null;
                 if (i < 1) {
                     ArrayList<Actor> castArrayList = findCastById(id);
-                    casts = castArrayList.toArray(new Actor[castArrayList.size()]);
+                    cast = castArrayList.toArray(new Actor[castArrayList.size()]);
                 }
 
                 Movie movie = new Movie(id, title)
@@ -158,7 +166,7 @@ public class TmdbUtils {
                         .addGenreIds(genreIds)
                         .addOverview(overview)
                         .addReleaseDate(releaseDateMillis)
-                        .addCast(casts);
+                        .addCast(cast);
 
                 movies.add(movie);
             }
@@ -364,6 +372,19 @@ public class TmdbUtils {
             paths[i] = backdrop.getString("file_path");
         }
         return paths;
+    }
+
+    @NonNull
+    public static ArrayList<Movie> findNowShowingMovies() {
+        String queryUrl = getNowShowingQueryUrl();
+        String json = getJsonResponse(queryUrl);
+
+        ArrayList<Movie> movies = new ArrayList<>();
+        if (json != null) {
+            movies = extractMoviesFromJson(json);
+        }
+
+        return movies;
     }
 
     @NonNull
