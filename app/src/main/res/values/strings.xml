@@ -5,20 +5,23 @@
 
     <string name="title_activity_main">MainActivity</string>
 
-    <!--bottom navigations-->
+    <!--navigation drawer-->
     <string name="title_trending">Trending</string>
     <string name="title_collections">Collections</string>
     <string name="title_watch_later">Watch later</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 
+    <!--collections tabs-->
     <string name="title_movie">Movie</string>
     <string name="title_anime">Anime</string>
     <string name="title_book">Book</string>
 
+    <!--collections screen-->
+    <string name="show_details">Show details</string>
     <string name="poster">poster</string>
 
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="show_details">Show details</string>
+    <!--movie details screen-->
     <string name="release_date">Release date</string>
     <string name="overview">Overview</string>
     <string name="tagline">Tagline</string>
@@ -29,4 +32,7 @@
     <string name="carousel">Carousel</string>
     <string name="profile_picture">Profile picture</string>
     <string name="swipe_up_indicator">swipe up indicator</string>
+    <string name="title_others">Others</string>
+    <string name="title_settings">Settings</string>
+    <string name="title_feedback">Feedback</string>
 </resources>

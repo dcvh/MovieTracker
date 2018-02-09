@@ -3,13 +3,6 @@ package tcd.android.com.movietracker;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.LinearGradient;
-import android.graphics.Paint;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
-import android.graphics.Shader;
-import android.graphics.drawable.GradientDrawable;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
 import android.support.annotation.RawRes;
@@ -45,6 +38,7 @@ public class GradientImageView extends FrameLayout {
     private void init(@Nullable AttributeSet attrs, int defStyleAttr) {
         TypedArray a = getContext().getTheme().obtainStyledAttributes(attrs, R.styleable.GradientImageView, defStyleAttr, 0);
         try {
+            // TODO: 2/7/18 make this works
             mColorStart = a.getInteger(R.styleable.GradientImageView_colorStart, 0);
             mColorEnd = a.getInteger(R.styleable.GradientImageView_colorEnd, 0);
         } finally {

@@ -1,10 +1,5 @@
 package tcd.android.com.movietracker.Entities;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-
 /**
  * Created by cpu10661 on 1/19/18.
  */

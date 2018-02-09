@@ -69,7 +69,8 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            android:layout_marginRight="@dimen/description_margin" />
+            android:layout_marginRight="@dimen/description_margin"
+            android:layout_marginEnd="@dimen/description_margin" />
 
     </android.support.constraint.ConstraintLayout>
 

@@ -7,7 +7,6 @@ import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -17,7 +16,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
@@ -183,7 +181,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
         mPosterImageView.setGradientCover(R.drawable.gradient_black_bottom);
         Glide.with(this).asBitmap().load(posterUrl).into(new SimpleTarget<Bitmap>() {
             @Override
-            public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+            public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
                 mPosterImageView.setImageBitmap(resource);
             }
         });
@@ -320,22 +318,21 @@ public class MovieDetailsActivity extends AppCompatActivity {
         }
 
         private void populateCrewInfo(@NonNull Context context, @NonNull ArrayList<CrewMember> crew) {
-            // TODO: 1/19/18 fix this mess
-            StringBuilder directors = new StringBuilder(), writers = new StringBuilder();
+            ArrayList<String> directors = new ArrayList<>(),
+                    writers = new ArrayList<>();
             for (CrewMember person : crew) {
                 if (person.getJob().equals("Director")) {
-                    directors.append(person.getName()).append(", ");
+                    directors.add(person.getName());
                 } else if (person.getDepartment().equals("Writing")) {
-                    writers.append(person.getName()).append(", ");
+                    writers.add(person.getName());
                 }
             }
 
-            directors.setLength(directors.length() - 2);
             TextView directorTextView = ((Activity)context).findViewById(R.id.tv_director);
-            directorTextView.setText(directors);
-            writers.setLength(directors.length() - 2);
+            directorTextView.setText(FormatUtils.commaJoin(directors));
+
             TextView writerTextView = ((Activity)context).findViewById(R.id.tv_writer);
-            writerTextView.setText(writers);
+            writerTextView.setText(FormatUtils.commaJoin(writers));
         }
 
         private void populateExtraInfo(@NonNull Context context, @NonNull MovieExtra extra) {
@@ -346,7 +343,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
             String info = String.format("%s  %s  %s",
                     extra.getClassification(),
                     TimeUtils.getDuration(extra.getRuntime()),
-                    TextUtils.join(", ", extra.getGenres())
+                    FormatUtils.commaJoin(extra.getGenres())
             );
             generalInfoTextView.setText(info);
 
@@ -360,7 +357,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
             // spoken languages
             TextView languagesTextView = activity.findViewById(R.id.tv_spoken_languages);
-            languagesTextView.setText(TextUtils.join(", ", extra.getSpokeLanguages()));
+            languagesTextView.setText(FormatUtils.commaJoin(extra.getSpokeLanguages()));
         }
     }
 }

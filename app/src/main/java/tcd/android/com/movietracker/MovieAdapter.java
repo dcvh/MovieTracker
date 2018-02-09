@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import tcd.android.com.movietracker.Entities.Movie;
 import tcd.android.com.movietracker.Utils.MovieUtils;
 import tcd.android.com.movietracker.Utils.TmdbUtils;
-import tcd.android.com.movietracker.Utils.Utils;
 
 import static tcd.android.com.movietracker.MovieDetailsActivity.ARGS_MOVIE_DETAILS;
 

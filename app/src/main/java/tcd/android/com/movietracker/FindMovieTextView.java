@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
 import android.util.AttributeSet;
-import android.widget.AutoCompleteTextView;
 
 import java.util.concurrent.TimeUnit;
 

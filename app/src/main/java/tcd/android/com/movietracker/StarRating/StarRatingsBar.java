@@ -1,14 +1,9 @@
 package tcd.android.com.movietracker.StarRating;
 
 import android.content.Context;
-import android.graphics.Canvas;
 import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 

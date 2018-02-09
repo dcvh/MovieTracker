@@ -1,6 +1,5 @@
 package tcd.android.com.movietracker.Utils;
 
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -32,6 +31,7 @@ import tcd.android.com.movietracker.Utils.Utils.TimeUtils;
  * Created by cpu10661 on 1/18/18.
  */
 
+@SuppressWarnings("WeakerAccess")
 public class TmdbUtils {
 
     // TODO: 1/19/18 secure this key before production 

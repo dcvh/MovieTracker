@@ -1,12 +1,9 @@
 package tcd.android.com.movietracker.Entities;
 
-import android.app.Notification;
-
 import java.util.ArrayList;
 
 import tcd.android.com.movietracker.Entities.Credit.Actor;
 import tcd.android.com.movietracker.Entities.Credit.CrewMember;
-import tcd.android.com.movietracker.StarRating.CastAdapter;
 
 /**
  * Created by cpu10661 on 1/19/18.

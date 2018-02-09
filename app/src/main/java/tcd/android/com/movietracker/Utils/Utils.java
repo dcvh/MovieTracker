@@ -19,8 +19,6 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.Locale;
 
-import tcd.android.com.movietracker.Entities.Credit.Actor;
-
 /**
  * Created by cpu10661 on 1/19/18.
  */
@@ -29,6 +27,14 @@ import tcd.android.com.movietracker.Entities.Credit.Actor;
 public class Utils {
 
     public static class FormatUtils {
+
+        public static String commaJoin(Object[] tokens) {
+            return TextUtils.join(", ", tokens);
+        }
+
+        public static String commaJoin(Iterable tokens) {
+            return TextUtils.join(", ", tokens);
+        }
 
         public static String join(String delimiter, Object[] tokens, int limit) {
             Object[] limitedTokens = Arrays.copyOf(tokens, limit);
