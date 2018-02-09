@@ -3,6 +3,7 @@ package tcd.android.com.movietracker;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.HandlerThread;
+import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageView;
 
 import java.util.ArrayList;
 
@@ -27,6 +29,7 @@ public class TrendingActivity extends AppCompatActivity {
         setUpToolbar();
 
         ViewPager movieSliderViewPager = findViewById(R.id.vp_movie_slider);
+        movieSliderViewPager.setPageTransformer(false, new ParralaxPageTransformer());
         final ArrayList<Movie> movies = new ArrayList<>();
         final TrendingMoviePagerAdapter adapter =
                 new TrendingMoviePagerAdapter(getSupportFragmentManager(), movies);
@@ -66,5 +69,14 @@ public class TrendingActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    class ParralaxPageTransformer implements ViewPager.PageTransformer {
+        @Override
+        public void transformPage(@NonNull View page, float position) {
+            int pageWidth = page.getWidth();
+            GradientImageView posterImageView = page.findViewById(R.id.giv_poster);
+            posterImageView.setTranslationX(-position * (pageWidth / 2));
+        }
     }
 }
