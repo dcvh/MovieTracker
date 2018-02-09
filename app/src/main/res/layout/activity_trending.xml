@@ -17,4 +17,12 @@
         android:layout_height="?attr/actionBarSize"
         android:theme="@style/WhiteIconToolbar" />
 
+    <ee.subscribe.gooeyloader.GooeyLoaderView
+        android:id="@+id/glv_downloading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:glv_duration_in_ms="2500"
+        app:glv_color="?attr/textColorHeadline"
+        android:layout_gravity="center"/>
+
 </FrameLayout>

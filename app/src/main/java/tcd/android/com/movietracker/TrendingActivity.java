@@ -4,6 +4,9 @@ import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +19,7 @@ import android.widget.ImageView;
 
 import java.util.ArrayList;
 
+import ee.subscribe.gooeyloader.GooeyLoaderView;
 import tcd.android.com.movietracker.Entities.Movie;
 import tcd.android.com.movietracker.Utils.TmdbUtils;
 
@@ -27,6 +31,8 @@ public class TrendingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_trending);
 
         setUpToolbar();
+
+        final GooeyLoaderView loadingView = findViewById(R.id.glv_downloading);
 
         ViewPager movieSliderViewPager = findViewById(R.id.vp_movie_slider);
         movieSliderViewPager.setPageTransformer(false, new ParralaxPageTransformer());
@@ -45,6 +51,7 @@ public class TrendingActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         adapter.notifyDataSetChanged();
+                        loadingView.setVisibility(View.GONE);
                     }
                 });
             }
@@ -69,6 +76,32 @@ public class TrendingActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    class TrendingMoviePagerAdapter extends FragmentPagerAdapter {
+
+        private ArrayList<Movie> mMovies;
+
+        TrendingMoviePagerAdapter(FragmentManager fm, ArrayList<Movie> movies) {
+            super(fm);
+            mMovies = movies;
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            Movie movie = mMovies.get(position);
+            return MovieDetailsFragment.newInstance(movie);
+        }
+
+        @Override
+        public int getCount() {
+            return mMovies.size();
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return mMovies.get(position).getId();
+        }
     }
 
     class ParralaxPageTransformer implements ViewPager.PageTransformer {

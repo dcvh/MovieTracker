@@ -22,7 +22,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".TrendingActivity"
-            android:theme="@style/AppThemeDark"/>
+            android:theme="@style/AppThemeDark"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
