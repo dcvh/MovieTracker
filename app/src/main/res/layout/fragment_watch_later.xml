@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="tcd.android.com.movietracker.TrendingFragment">
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp_movie_slider"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <ee.subscribe.gooeyloader.GooeyLoaderView
+        android:id="@+id/glv_downloading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:glv_duration_in_ms="2500"
+        app:glv_color="?attr/textColorHeadline"
+        android:layout_gravity="center"/>
+
+</FrameLayout>

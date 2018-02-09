@@ -64,13 +64,13 @@ public class MovieAutoCompleteAdapter extends BaseAdapter implements Filterable 
 
         Movie movie = getItem(position);
         if (movie != null) {
-            ImageView posterImageView = convertView.findViewById(R.id.iv_poster);
-            String posterUrl = TmdbUtils.getImageUrl(movie.getPosterPath());
-            Glide.with(parent.getContext()).load(posterUrl).into(posterImageView);
-
-            ((TextView) convertView.findViewById(R.id.tv_title)).setText(movie.getTitle());
-            ((TextView) convertView.findViewById(R.id.tv_cast))
-                    .setText(MovieUtils.getFirstBilledCast(movie.getCast(), 2));
+//            ImageView posterImageView = convertView.findViewById(R.id.iv_poster);
+//            String posterUrl = TmdbUtils.getImageUrl(movie.getPosterPath());
+//            Glide.with(parent.getContext()).load(posterUrl).into(posterImageView);
+//
+//            ((TextView) convertView.findViewById(R.id.tv_title)).setText(movie.getTitle());
+//            ((TextView) convertView.findViewById(R.id.tv_cast))
+//                    .setText(MovieUtils.getFirstBilledCast(movie.getCast(), 2));
         }
 
         return convertView;

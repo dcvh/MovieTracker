@@ -5,10 +5,12 @@
     android:id="@+id/cv_movie_item"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardBackgroundColor="?attr/backgroundCardColor"
     android:elevation="@dimen/cardview_default_elevation"
+    app:cardBackgroundColor="?attr/backgroundCardColor"
     app:cardCornerRadius="@dimen/movie_card_view_radius"
-    android:layout_marginBottom="@dimen/row_spacing"
+    android:layout_marginBottom="@dimen/card_margin"
+    android:layout_marginLeft="@dimen/card_margin"
+    android:layout_marginRight="@dimen/card_margin"
     tools:targetApi="lollipop">
 
     <android.support.constraint.ConstraintLayout
@@ -17,60 +19,51 @@
         android:layout_height="wrap_content" >
 
         <ImageView
-            android:id="@+id/iv_poster"
-            android:layout_width="56dp"
-            android:layout_height="wrap_content"
-            android:contentDescription="@string/poster"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <LinearLayout
+            android:id="@+id/iv_backdrop"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:orientation="vertical"
+            android:scaleType="centerCrop"
+            app:layout_constraintDimensionRatio="H,16:9"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/iv_poster"
-            app:layout_constraintRight_toLeftOf="@+id/iv_show_details"
-            android:layout_marginLeft="@dimen/description_margin"
-            android:layout_marginRight="@dimen/description_margin"
-            android:gravity="center_vertical">
-
-            <TextView
-                android:id="@+id/tv_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                android:textColor="@android:color/white"
-                tools:text="Blade Runner 2049"/>
-
-            <TextView
-                android:id="@+id/tv_cast"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
-
-            <ProgressBar
-                style="@android:style/Widget.ProgressBar.Horizontal"
-                android:layout_width="64dp"
-                android:layout_height="8dp"
-                android:layout_marginTop="8dp"
-                android:progressBackgroundTint="#556177"
-                android:progress="43" />
-
-        </LinearLayout>
-
-        <ImageView
-            android:id="@+id/iv_show_details"
-            android:layout_width="24dp"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_arrow_right_white_48dp"
-            android:contentDescription="@string/show_details"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            android:layout_marginRight="@dimen/description_margin"
-            android:layout_marginEnd="@dimen/description_margin" />
+            android:contentDescription="@string/backdrop" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:lines="1"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="?attr/textColorHeadline"
+            app:layout_constraintLeft_toLeftOf="@+id/tv_cast"
+            app:layout_constraintBottom_toTopOf="@+id/tv_cast"
+            app:layout_constraintRight_toRightOf="@+id/tv_cast" />
+
+        <TextView
+            android:id="@+id/tv_cast"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:lines="1"
+            android:ellipsize="end"
+            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+            android:textColor="?attr/textColorContent"
+            app:layout_constraintLeft_toLeftOf="@+id/iv_backdrop"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_backdrop"
+            app:layout_constraintRight_toLeftOf="@+id/tv_average_vote"
+            android:layout_marginLeft="@dimen/card_inside_view_margin"
+            android:layout_marginStart="@dimen/card_inside_view_margin"
+            android:layout_marginBottom="@dimen/card_inside_view_margin" />
+
+        <TextView
+            android:id="@+id/tv_average_vote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintRight_toRightOf="@+id/iv_backdrop"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_backdrop"
+            android:layout_marginRight="@dimen/card_inside_view_margin"
+            android:layout_marginEnd="@dimen/card_inside_view_margin"
+            android:layout_marginBottom="@dimen/card_inside_view_margin" />
 
     </android.support.constraint.ConstraintLayout>
 

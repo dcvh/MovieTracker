@@ -1,21 +1,17 @@
 package tcd.android.com.movietracker;
 
-import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.view.WindowManager;
-import android.widget.ImageView;
+import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
@@ -23,31 +19,56 @@ import ee.subscribe.gooeyloader.GooeyLoaderView;
 import tcd.android.com.movietracker.Entities.Movie;
 import tcd.android.com.movietracker.Utils.TmdbUtils;
 
-public class TrendingActivity extends AppCompatActivity {
+public class TrendingFragment extends Fragment {
+
+    private static final String TAG = TrendingFragment.class.getSimpleName();
+
+    private static final int DEFAULT_OFFSCREEN_PAGE_LIMIT = 10;
+
+    public static TrendingFragment newInstance() {
+        Bundle args = new Bundle();
+        TrendingFragment fragment = new TrendingFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_trending);
+    }
 
-        setUpToolbar();
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_trending, container, false);
 
-        final GooeyLoaderView loadingView = findViewById(R.id.glv_downloading);
+        initMovieSlider(view);
 
-        ViewPager movieSliderViewPager = findViewById(R.id.vp_movie_slider);
+        return view;
+    }
+
+    private void initMovieSlider(View view) {
+
+        final GooeyLoaderView loadingView = view.findViewById(R.id.glv_downloading);
+
+        // init view pager
+        ViewPager movieSliderViewPager = view.findViewById(R.id.vp_movie_slider);
+        movieSliderViewPager.setOffscreenPageLimit(DEFAULT_OFFSCREEN_PAGE_LIMIT);
         movieSliderViewPager.setPageTransformer(false, new ParralaxPageTransformer());
         final ArrayList<Movie> movies = new ArrayList<>();
         final TrendingMoviePagerAdapter adapter =
-                new TrendingMoviePagerAdapter(getSupportFragmentManager(), movies);
+                new TrendingMoviePagerAdapter(getChildFragmentManager(), movies);
         movieSliderViewPager.setAdapter(adapter);
 
-        HandlerThread handlerThread = new HandlerThread(getPackageName());
+        // retrieve movies async
+        HandlerThread handlerThread = new HandlerThread(TAG);
         handlerThread.start();
         new Handler(handlerThread.getLooper()).post(new Runnable() {
             @Override
             public void run() {
                 movies.addAll(TmdbUtils.findNowShowingMovies());
-                runOnUiThread(new Runnable() {
+                loadingView.post(new Runnable() {
                     @Override
                     public void run() {
                         adapter.notifyDataSetChanged();
@@ -56,26 +77,6 @@ public class TrendingActivity extends AppCompatActivity {
                 });
             }
         });
-    }
-
-    private void setUpToolbar() {
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setDisplayShowTitleEnabled(false);
-        }
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                onBackPressed();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     class TrendingMoviePagerAdapter extends FragmentPagerAdapter {

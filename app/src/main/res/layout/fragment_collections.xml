@@ -4,18 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="tcd.android.com.movietracker.TrendingActivity">
+    tools:context="tcd.android.com.movietracker.TrendingFragment">
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/vp_movie_slider"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_movie_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:theme="@style/WhiteIconToolbar" />
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:paddingTop="?attr/actionBarSize" />
 
     <ee.subscribe.gooeyloader.GooeyLoaderView
         android:id="@+id/glv_downloading"
@@ -23,6 +19,7 @@
         android:layout_height="wrap_content"
         app:glv_duration_in_ms="2500"
         app:glv_color="?attr/textColorHeadline"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center"
+        android:visibility="gone"/>
 
 </FrameLayout>
