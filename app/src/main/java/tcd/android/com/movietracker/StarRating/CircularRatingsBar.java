@@ -55,7 +55,7 @@ public class CircularRatingsBar extends View {
         int progressColor = a.getColor(R.styleable.CircularRatingsBar_progressColor, accentColor);
         mArcPaint.setColor(progressColor);
         mRatings = a.getInt(R.styleable.CircularRatingsBar_ratings, 0);
-        int strokeWidth = a.getInt(R.styleable.CircularRatingsBar_strokeWidth, STROKE_WIDTH);
+        int strokeWidth = a.getInt(R.styleable.CircularRatingsBar_circleStrokeWidth, STROKE_WIDTH);
         a.recycle();
 
         mArcPaint.setAntiAlias(true);

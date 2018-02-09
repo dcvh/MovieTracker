@@ -11,8 +11,7 @@
     <declare-styleable name="CircularRatingsBar">
         <attr name="progressColor" format="color"/>
         <attr name="ratings" format="integer"/>
-        <!--<attr name="textColor" format="string"/>-->
-        <attr name="strokeWidth" format="integer"/>
+        <attr name="circleStrokeWidth" format="integer"/>
     </declare-styleable>
 
     <declare-styleable name="GradientImageView">

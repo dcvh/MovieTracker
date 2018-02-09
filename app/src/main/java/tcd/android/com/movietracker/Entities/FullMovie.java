@@ -18,6 +18,7 @@ public class FullMovie {
     private ArrayList<Actor> mCast;
     private ArrayList<CrewMember> mCrew;
     private MovieExtra mMovieExtra;
+    private String[] mBackdrops;
 
     public FullMovie() {}
 
@@ -25,6 +26,7 @@ public class FullMovie {
         mMovie = movie;
     }
 
+    // TODO: 2/7/18 wrong builder pattern
     public FullMovie addMovie(Movie movie) {
         mMovie = movie;
         return this;
@@ -45,6 +47,11 @@ public class FullMovie {
         return this;
     }
 
+    public FullMovie addBackdrops(String[] backdrops) {
+        mBackdrops = backdrops;
+        return this;
+    }
+
     public Movie getMovie() { return mMovie; }
 
     public ArrayList<Actor> getCast() {
@@ -58,4 +65,6 @@ public class FullMovie {
     public MovieExtra getMovieExtra() {
         return mMovieExtra;
     }
+
+    public String[] getBackdrops() { return mBackdrops; }
 }

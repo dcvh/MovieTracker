@@ -19,14 +19,21 @@
             android:scaleType="centerCrop"
             android:contentDescription="@string/poster"/>
 
-        <ImageView
-            android:id="@+id/iv_carousel"
+        <com.synnapps.carouselview.CarouselView
+            android:id="@+id/cv_movie_images"
             android:layout_width="match_parent"
             android:elevation="1dp"
-            android:layout_height="300dp"
+            android:layout_height="wrap_content"
             android:scaleType="centerCrop"
+            app:indicatorGravity="top|center_horizontal"
             android:contentDescription="@string/carousel"
-            tools:targetApi="lollipop" />
+            tools:targetApi="lollipop"
+            app:fillColor="#FFFFFFFF"
+            app:pageColor="#00000000"
+            app:radius="6dp"
+            app:slideInterval="3000"
+            app:strokeColor="#FF777777"
+            app:strokeWidth="1dp"/>
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"

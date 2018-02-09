@@ -1,10 +1,10 @@
 package tcd.android.com.movietracker.Utils;
 
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
-import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -59,7 +59,7 @@ public class TmdbUtils {
                 .toString();
     }
 
-    private static String getMovieDetailsQueryUrl(int movieId) {
+    private static String getExtraQueryUrl(int movieId) {
         String baseUrl = String.format(Locale.getDefault(),
                 "https://api.themoviedb.org/3/movie/%d?", movieId);
         return Uri.parse(baseUrl).buildUpon()
@@ -131,6 +131,7 @@ public class TmdbUtils {
                 float averageVote = (float) result.getDouble("vote_average");
                 int voteCount = result.getInt("vote_count");
                 String posterPath = result.getString("poster_path");
+                String backdropPath = result.getString("backdrop_path");
                 String overview = result.getString("overview");
 
                 // release date
@@ -151,8 +152,14 @@ public class TmdbUtils {
                     casts = castArrayList.toArray(new Actor[castArrayList.size()]);
                 }
 
-                Movie movie = new Movie(id, title, averageVote, voteCount, posterPath,
-                        genreIds, overview, releaseDateMillis, casts);
+                Movie movie = new Movie(id, title)
+                        .addVote(averageVote, voteCount)
+                        .addImages(posterPath, backdropPath)
+                        .addGenreIds(genreIds)
+                        .addOverview(overview)
+                        .addReleaseDate(releaseDateMillis)
+                        .addCast(casts);
+
                 movies.add(movie);
             }
         } catch (JSONException e) {
@@ -239,7 +246,7 @@ public class TmdbUtils {
 
     @Nullable
     public static MovieExtra findExtraById(int movieId) {
-        String queryUrl = getMovieDetailsQueryUrl(movieId);
+        String queryUrl = getExtraQueryUrl(movieId);
         String json = getJsonResponse(queryUrl);
 
         MovieExtra movieExtra = null;
@@ -300,16 +307,23 @@ public class TmdbUtils {
         if (json != null) {
             try {
                 JSONObject root = new JSONObject(json);
-                JSONObject creditsRoot = root.getJSONObject("credits");
 
+                // TODO: 2/7/18 why do we have to use ArrayList?
+                JSONObject creditsRoot = root.getJSONObject("credits");
                 ArrayList<Actor> cast = extractCastFromJson(creditsRoot);
                 ArrayList<CrewMember> crew = extractCrewFromJson(creditsRoot);
-                MovieExtra movieExtra = extractExtraFromJson(root);
 
+                MovieExtra movieExtra = extractExtraFromJson(root);
                 String classification = extractClassificationFromJson(root);
                 movieExtra.setClassification(classification);
 
-                fullMovie = new FullMovie().addCast(cast).addCrew(crew).addExtra(movieExtra);
+                String[] backdrops = extractBackdropsFromJson(root);
+
+                fullMovie = new FullMovie()
+                        .addCast(cast)
+                        .addCrew(crew)
+                        .addExtra(movieExtra)
+                        .addBackdrops(backdrops);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -331,12 +345,25 @@ public class TmdbUtils {
             String iso_3166_1 = result.getString("iso_3166_1");
             if (iso_3166_1.equals(nationCode) ||
                     (iso_3166_1.equals("US") && certification == null)) {
-               certification = result.getJSONArray("release_dates")
-                       .getJSONObject(0).getString("certification");
+                certification = result.getJSONArray("release_dates")
+                        .getJSONObject(0).getString("certification");
             }
         }
 
         return certification;
+    }
+
+    @NonNull
+    private static String[] extractBackdropsFromJson(@NonNull JSONObject root)
+            throws JSONException {
+        JSONArray backdrops = root.getJSONObject("images").getJSONArray("backdrops");
+        int totalBackdrops = Math.min(backdrops.length(), 4);
+        String[] paths = new String[totalBackdrops];
+        for (int i = 0; i < totalBackdrops; i++) {
+            JSONObject backdrop = backdrops.getJSONObject(i);
+            paths[i] = backdrop.getString("file_path");
+        }
+        return paths;
     }
 
     @NonNull

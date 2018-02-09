@@ -15,6 +15,7 @@ public class Movie implements Serializable {
     private float mAverageVote;
     private int mVoteCount;
     private String mPosterPath;
+    private String mBackdropPath;
     private int[] mGenreIds;
     private String mOverview;
     private long mReleaseDate;
@@ -22,17 +23,41 @@ public class Movie implements Serializable {
 
     public Movie() {}
 
-    public Movie(int id, String title, float averageVote, int voteCount, String posterPath,
-                 int[] genreIds, String overview, long releaseDate, Actor[] cast) {
+    public Movie(int id, String title) {
         mId = id;
         mTitle = title;
+    }
+
+    public Movie addVote(float averageVote, int count) {
         mAverageVote = averageVote;
-        mVoteCount = voteCount;
-        mPosterPath = posterPath;
+        mVoteCount = count;
+        return this;
+    }
+
+    public Movie addImages(String poster, String backdrop) {
+        mPosterPath = poster;
+        mBackdropPath = backdrop;
+        return this;
+    }
+
+    public Movie addGenreIds(int[] genreIds) {
         mGenreIds = genreIds;
+        return this;
+    }
+
+    public Movie addOverview(String overview) {
         mOverview = overview;
+        return this;
+    }
+
+    public Movie addReleaseDate(long releaseDate) {
         mReleaseDate = releaseDate;
+        return this;
+    }
+
+    public Movie addCast(Actor[] cast) {
         mCast = cast;
+        return this;
     }
 
     public int getId() {
@@ -54,6 +79,8 @@ public class Movie implements Serializable {
     public String getPosterPath() {
         return mPosterPath;
     }
+
+    public String getBackdropPath() { return mBackdropPath; }
 
     public int[] getGenreIds() {
         return mGenreIds;

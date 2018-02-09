@@ -49,29 +49,22 @@ public  class PageFragment extends Fragment {
 
         ArrayList<Movie> movies = new ArrayList<>();
         try {
-            movies.add(new Movie(
-                    76341,
-                    "Mad Max: Fury Road",
-                    7.3f,
-                    2661,
-                    "/kqjL17yufvn9OVLyXYpvtyrFfak.jpg",
-                    null,
-                    "An apocalyptic story set in the furthest reaches of our planet, in a stark desert landscape where humanity is broken, and most everyone is crazed fighting for the necessities of life. Within this world exist two rebels on the run who just might be able to restore order. There's Max, a man of action and a man of few words, who seeks peace of mind following the loss of his wife and child in the aftermath of the chaos. And Furiosa, a woman of action and a woman who believes her path to survival may be achieved if she can make it across the desert back to her childhood homeland.",
-                    TimeUtils.getMillis("2015-05-13", "YYYY-MM-dd"),
-                    new Actor[] {
+            movies.add(new Movie(76341, "Mad Max: Fury Road")
+                    .addVote(7.3f, 2661)
+                    .addImages("/kqjL17yufvn9OVLyXYpvtyrFfak.jpg", "")
+                    .addOverview("An apocalyptic story set in the furthest reaches of our planet, in a stark desert landscape where humanity is broken, and most everyone is crazed fighting for the necessities of life. Within this world exist two rebels on the run who just might be able to restore order. There's Max, a man of action and a man of few words, who seeks peace of mind following the loss of his wife and child in the aftermath of the chaos. And Furiosa, a woman of action and a woman who believes her path to survival may be achieved if she can make it across the desert back to her childhood homeland.")
+                    .addReleaseDate(TimeUtils.getMillis("2015-05-13", "YYYY-MM-dd"))
+                    .addCast(new Actor[] {
                             new Actor(2524, "Tom Hardy", "Max Rockatansky", "/mHSmt9qu2JzEPqnVWCGViv9Stnn.jpg"),
                             new Actor(6885, "Charlie Theron", "Imperator Furiosa", "/k5Xt2mNlraX7yHYaPy9gvayCaKV.jpg")
                     }));
-            movies.add(new Movie(
-                    335984,
-                    "Blade Runner 2049",
-                    7.4f,
-                    10486,
-                    "/aMpyrCizvSdc0UIMblJ1srVgAEF.jpg",
-                    new int[] {28, 12, 878, 53},
-                    "Thirty years after the events of the first film, a new blade runner, LAPD Officer K, unearths a long-buried secret that has the potential to plunge what's left of society into chaos. K's discovery leads him on a quest to find Rick Deckard, a former LAPD blade runner who has been missing for 30 years.",
-                    TimeUtils.getMillis("2017-10-04", "YYYY-MM-dd"),
-                    new Actor[] {
+            movies.add(new Movie(335984, "Blade Runner 2049")
+                    .addVote(7.4f,10486)
+                    .addImages("/aMpyrCizvSdc0UIMblJ1srVgAEF.jpg", "/mVr0UiqyltcfqxbAUcLl9zWL8ah.jpg")
+                    .addGenreIds(new int[] {28, 12, 878, 53})
+                    .addOverview("Thirty years after the events of the first film, a new blade runner, LAPD Officer K, unearths a long-buried secret that has the potential to plunge what's left of society into chaos. K's discovery leads him on a quest to find Rick Deckard, a former LAPD blade runner who has been missing for 30 years.")
+                    .addReleaseDate(TimeUtils.getMillis("2017-10-04", "YYYY-MM-dd"))
+                    .addCast(new Actor[] {
                             new Actor(30614, "Ryan Gosling", "K", "/5rOcicCrTCWye0O2S3dnbnWaCr1.jpg"),
                             new Actor(3, "Harrison Ford", "Rick Deckard", "/7CcoVFTogQgex2kJkXKMe8qHZrC.jpg")
                     }));

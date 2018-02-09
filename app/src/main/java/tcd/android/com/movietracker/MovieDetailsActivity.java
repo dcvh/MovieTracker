@@ -5,7 +5,9 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Handler;
+import android.os.HandlerThread;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +17,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
@@ -26,9 +29,12 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.synnapps.carouselview.CarouselView;
+import com.synnapps.carouselview.ImageListener;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 import tcd.android.com.movietracker.Entities.Credit.Actor;
@@ -46,9 +52,8 @@ import tcd.android.com.movietracker.Utils.Utils.FormatUtils;
 
 public class MovieDetailsActivity extends AppCompatActivity {
 
-    private static final String TAG = MovieDetailsActivity.class.getSimpleName();
-
     public static final String ARGS_MOVIE_DETAILS = "argsMovieDetails";
+    private static final String TAG = MovieDetailsActivity.class.getSimpleName();
     private static final int DEFAULT_ANIMATION_DURATION = 300;
     private static final int UP_INDICATOR_BLINK_DURATION = (int) TimeUnit.SECONDS.toMillis(1);
 
@@ -56,7 +61,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
     private BottomSheetBehavior mBottomSheetBehavior;
     private GradientImageView mPosterImageView;
     private ImageView mUpIndicatorImageView;
-    private ImageView mCarouselImageView;
+    private CarouselView mCarouselView;
 
     private int mPeekHeight = 300;
     private int mScreenHeight;
@@ -88,8 +93,8 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
         mScreenHeight = mPosterImageView.getHeight();
         setUpPeekArea();
-        mCarouselImageView.getLayoutParams().height = mScreenHeight - mBottomSheetLayout.getHeight() + mPeekHeight;
-        mCarouselImageView.setTranslationY(mScreenHeight);
+        mCarouselView.getLayoutParams().height = mScreenHeight - mBottomSheetLayout.getHeight() + mPeekHeight;
+        mCarouselView.setTranslationY(mScreenHeight);
     }
 
     private void initUiComponents() {
@@ -97,7 +102,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
         mBottomSheetLayout = findViewById(R.id.bottom_sheet);
         mPosterImageView = findViewById(R.id.giv_poster);
         mUpIndicatorImageView = findViewById(R.id.iv_up_indicator);
-        mCarouselImageView = findViewById(R.id.iv_carousel);
+        mCarouselView = findViewById(R.id.cv_movie_images);
 
         setUpToolbar();
         setUpBottomSheet();
@@ -144,7 +149,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
             @Override
             public void onSlide(@NonNull View bottomSheet, float slideOffset) {
-                mCarouselImageView.setTranslationY((1 - slideOffset) * mScreenHeight);
+                mCarouselView.setTranslationY((1 - slideOffset) * mScreenHeight);
             }
         });
     }
@@ -171,7 +176,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
         setUpFullMovieInfo(movie.getId());
     }
 
-    private void setUpMovieInfo(Movie movie) {
+    private void setUpMovieInfo(final Movie movie) {
         // TODO: 05/02/2018 custom view should be ImageView, instead of FrameLayout
         // poster
         String posterUrl = TmdbUtils.getImageUrl(movie.getPosterPath());
@@ -194,6 +199,17 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
         TextView overviewTextView = findViewById(R.id.tv_overview);
         overviewTextView.setText(movie.getOverview());
+
+        // TODO: 2/7/18 what if user doesn't have internet access at the meantime
+        // backdrop
+        mCarouselView.setImageListener(new ImageListener() {
+            @Override
+            public void setImageForPosition(int position, ImageView imageView) {
+                String url = TmdbUtils.getImageUrl(movie.getBackdropPath());
+                Glide.with(MovieDetailsActivity.this).load(url).into(imageView);
+            }
+        });
+        mCarouselView.setPageCount(1);
     }
 
     private void setUpAverageVoteIndicator(float averageVote, int voteCount) {
@@ -245,13 +261,51 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
             Context context = mContext.get();
             if (context != null && fullMovie != null) {
-                populateCastInfo(fullMovie.getCast(), context);
-                populateCrewInfo(fullMovie.getCrew(), context);
-                populateExtraInfo(fullMovie.getMovieExtra(), context);
+                populateBackdropsCarousel(context, fullMovie.getBackdrops());
+                populateCastInfo(context, fullMovie.getCast());
+                populateCrewInfo(context, fullMovie.getCrew());
+                populateExtraInfo(context, fullMovie.getMovieExtra());
             }
         }
 
-        private void populateCastInfo(@NonNull ArrayList<Actor> cast, @NonNull Context context) {
+        private void populateBackdropsCarousel(@NonNull final Context context, final String[] paths) {
+            final Activity activity = (Activity) context;
+            final CarouselView carouselView = activity.findViewById(R.id.cv_movie_images);
+            final Bitmap[] backdrops = new Bitmap[paths.length];
+
+            HandlerThread handlerThread = new HandlerThread(TAG);
+            handlerThread.start();
+            new Handler(handlerThread.getLooper()).post(new Runnable() {
+                @Override
+                public void run() {
+                    for (int i = 0; i < paths.length; i++) {
+                        String url = TmdbUtils.getImageUrl(paths[i]);
+                        try {
+                            Bitmap bitmap = Glide.with(activity).asBitmap().load(url).submit().get();
+                            backdrops[i] = Utils.darkenBitmap(bitmap);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        } catch (ExecutionException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    activity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            carouselView.setImageListener(new ImageListener() {
+                                @Override
+                                public void setImageForPosition(int position, ImageView imageView) {
+                                    imageView.setImageBitmap(backdrops[position]);
+                                }
+                            });
+                            carouselView.setPageCount(backdrops.length);
+                        }
+                    });
+                }
+            });
+        }
+
+        private void populateCastInfo(@NonNull Context context, @NonNull ArrayList<Actor> cast) {
             RecyclerView castRecyclerView = ((Activity)context).findViewById(R.id.rv_cast_crew);
             castRecyclerView.setItemAnimator(new DefaultItemAnimator());
             castRecyclerView.setHasFixedSize(true);
@@ -265,7 +319,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
             castRecyclerView.setAdapter(castAdapter);
         }
 
-        private void populateCrewInfo(@NonNull ArrayList<CrewMember> crew, @NonNull Context context) {
+        private void populateCrewInfo(@NonNull Context context, @NonNull ArrayList<CrewMember> crew) {
             // TODO: 1/19/18 fix this mess
             StringBuilder directors = new StringBuilder(), writers = new StringBuilder();
             for (CrewMember person : crew) {
@@ -284,19 +338,8 @@ public class MovieDetailsActivity extends AppCompatActivity {
             writerTextView.setText(writers);
         }
 
-        private void populateExtraInfo(@NonNull MovieExtra extra, @NonNull Context context) {
+        private void populateExtraInfo(@NonNull Context context, @NonNull MovieExtra extra) {
             Activity activity = (Activity) context;
-
-            // TODO: 05/02/2018 implement real carousel
-            // carousel
-            final ImageView carouselImageView = activity.findViewById(R.id.iv_carousel);
-            Glide.with(context).asBitmap().load(R.drawable.carousel).into(new SimpleTarget<Bitmap>() {
-                @Override
-                public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
-                    Bitmap bitmap = Utils.darkenBitmap(resource);
-                    carouselImageView.setImageBitmap(bitmap);
-                }
-            });
 
             // general info
             TextView generalInfoTextView = activity.findViewById(R.id.tv_general_info);
