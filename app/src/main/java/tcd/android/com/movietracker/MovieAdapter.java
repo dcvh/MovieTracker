@@ -50,7 +50,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         Glide.with(mContext).load(posterUrl).into(holder.mPosterImageView);
 
         holder.mTitleTextView.setText(movie.getTitle());
-        holder.mCastTextView.setText(movie.getFirstBilledActors(TOTAL_FIRST_BILLED_ACTORS));
+        holder.mCastTextView.setText(Utils.getFirstBilledCast(movie.getCast(), TOTAL_FIRST_BILLED_ACTORS));
 
         holder.mItemCardView.setOnClickListener(new View.OnClickListener() {
             @Override

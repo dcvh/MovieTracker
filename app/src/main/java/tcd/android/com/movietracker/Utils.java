@@ -9,6 +9,7 @@ import android.graphics.LightingColorFilter;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.text.format.DateUtils;
 
 import java.text.DecimalFormat;
@@ -18,26 +19,27 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.Locale;
 
+import tcd.android.com.movietracker.Entities.Credit.Actor;
+
 /**
  * Created by cpu10661 on 1/19/18.
  */
 
 @SuppressWarnings("WeakerAccess")
 public class Utils {
-    @NonNull
-    public static String join(@NonNull CharSequence delimiter,
-                              @NonNull Iterable<? extends CharSequence> elements) {
-        StringBuilder result = new StringBuilder();
-        for (CharSequence element : elements) {
-            result.append(element).append(delimiter);
+
+    public static String getFirstBilledCast(Actor[] cast, int totalActors) {
+        int length = Math.min(cast.length, totalActors);
+        String[] actorNames = new String[length];
+        for (int i = 0; i < length; i++) {
+            actorNames[i] = cast[i].getName();
         }
-        result.setLength(result.length() - delimiter.length());
-        return result.toString();
+        return TextUtils.join(", ", actorNames);
     }
 
-    @NonNull
-    public static String join(@NonNull CharSequence delimiter, @NonNull CharSequence[] elements) {
-        return join(delimiter, Arrays.asList(elements));
+    public static String join(String delimiter, Object[] tokens, int limit) {
+        Object[] limitedTokens = Arrays.copyOf(tokens, limit);
+        return TextUtils.join(delimiter, limitedTokens);
     }
 
     public static String formatNumber(int number, String pattern) {

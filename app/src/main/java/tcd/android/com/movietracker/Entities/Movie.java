@@ -70,19 +70,4 @@ public class Movie implements Serializable {
     public Actor[] getCast() {
         return mCast;
     }
-
-    public String getFirstBilledActors(int actorCount) {
-        // TODO: 1/19/18 should be a simple POJO without complicated methods
-        StringBuilder majorCasts = new StringBuilder();
-        if (mCast != null) {
-            int limit = Math.min(actorCount, mCast.length);
-            for (int i = 0; i < limit; i++) {
-                majorCasts.append(mCast[i].getName());
-                majorCasts.append(", ");
-            }
-        }
-//        majorCasts.setCharAt(majorCasts.length() - 1, '\u2026');         // ellipsis
-        majorCasts.setLength(majorCasts.length() - 2);
-        return majorCasts.toString();
-    }
 }

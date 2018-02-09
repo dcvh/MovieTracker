@@ -68,7 +68,7 @@ public class MovieAutoCompleteAdapter extends BaseAdapter implements Filterable 
 
             ((TextView) convertView.findViewById(R.id.tv_title)).setText(movie.getTitle());
             ((TextView) convertView.findViewById(R.id.tv_cast))
-                    .setText(movie.getFirstBilledActors(2));
+                    .setText(Utils.getFirstBilledCast(movie.getCast(), 2));
         }
 
         return convertView;

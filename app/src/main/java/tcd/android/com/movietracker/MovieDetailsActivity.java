@@ -14,6 +14,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
@@ -70,10 +71,6 @@ public class MovieDetailsActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         if (mBottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
-            // TODO: 05/02/2018 remove this if unnecessary
-            // temporary workaround, calling twice to scroll to top
-//            mBottomSheetLayout.smoothScrollTo(0, 0);
-//            mBottomSheetLayout.smoothScrollTo(0, 0);
             mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
             return;
         }
@@ -125,8 +122,6 @@ public class MovieDetailsActivity extends AppCompatActivity {
     private void setUpBottomSheet() {
 
         mBottomSheetBehavior = BottomSheetBehavior.from(mBottomSheetLayout);
-        // TODO: 1/18/18 find a way to hide bottom sheet
-//        mBottomSheetBehavior.setHideable(true);
         mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
 
         mBottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
@@ -171,8 +166,6 @@ public class MovieDetailsActivity extends AppCompatActivity {
         setUpMovieInfo(movie);
         setUpAverageVoteIndicator(movie.getAverageVote(), movie.getVoteCount());
         setUpFullMovieInfo(movie.getId());
-
-        // TODO: 05/02/2018  recalculate carousel height
     }
 
     private void setUpMovieInfo(Movie movie) {
@@ -191,7 +184,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
         titleTextView.setText(movie.getTitle());
 
         TextView generalInfoTextView = findViewById(R.id.tv_general_info);
-        generalInfoTextView.setText(movie.getFirstBilledActors(2));
+        generalInfoTextView.setText(Utils.getFirstBilledCast(movie.getCast(), 2));
 
         TextView releaseDateTextView = findViewById(R.id.tv_release_date);
         releaseDateTextView.setText(Utils.getDate(this, movie.getReleaseDate()));
@@ -306,7 +299,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
             // general info
             TextView generalInfoTextView = activity.findViewById(R.id.tv_general_info);
             String info = "R  " + Utils.getDuration(extra.getRuntime()) + "  "
-                    + Utils.join(", ", extra.getGenres());
+                    + TextUtils.join(", ", extra.getGenres());
             generalInfoTextView.setText(info);
 
             // tagline
@@ -315,11 +308,11 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
             // production countries
             TextView prodCountriesTextView = activity.findViewById(R.id.tv_production_country);
-            prodCountriesTextView.setText(Utils.join("\n", extra.getCountries()));
+            prodCountriesTextView.setText(TextUtils.join("\n", extra.getCountries()));
 
             // spoken languages
             TextView languagesTextView = activity.findViewById(R.id.tv_spoken_languages);
-            languagesTextView.setText(Utils.join(", ", extra.getSpokeLanguages()));
+            languagesTextView.setText(TextUtils.join(", ", extra.getSpokeLanguages()));
         }
     }
 }

@@ -3,6 +3,7 @@ package tcd.android.com.movietracker;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -70,7 +71,7 @@ public class TmdbUtils {
 
         return Uri.parse(baseUrl).buildUpon()
                 .appendQueryParameter("api_key", TMDB_API_KEY)
-                .appendQueryParameter("append_to_response", Utils.join(",", fields))
+                .appendQueryParameter("append_to_response", TextUtils.join(",", fields))
                 .toString();
     }
 
